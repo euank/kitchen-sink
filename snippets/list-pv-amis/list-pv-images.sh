@@ -28,9 +28,11 @@ while read -r instance_id image_id; do
 	elif grep "${image_id}=1" <(echo "${image_cache}") &>/dev/null; then
 		is_containerlinux="1"
 	else
-		is_containerlinux=$(aws ec2 describe-images --region=$REGION \
-			--image-ids="${image_id}" \
-			| jq ".Images[] | [select(.OwnerId == \"${IMAGE_OWNER}\")] | length")
+		is_containerlinux=$(aws ec2 describe-images \
+		                        --output=json \
+		                        --region=$REGION \
+		                        --image-ids="${image_id}" \
+		                        	| jq ".Images[] | [select(.OwnerId == \"${IMAGE_OWNER}\")] | length")
 		image_cache="${image_cache}\n${image_id}=${is_containerlinux}"
 	fi
 		
