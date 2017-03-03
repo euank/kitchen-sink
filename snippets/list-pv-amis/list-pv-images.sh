@@ -25,7 +25,11 @@ REGION="${1:?Please provide the AWS region to search as an argument}"
 instance_pairs=$(aws ec2 describe-instances \
                      --output=json \
                      --region=$REGION \
-                     --filters Name=virtualization-type,Values=paravirtual,Name=instance-state-name,Values=running | jq -r -c '.Reservations[].Instances[] | [.InstanceId, .ImageId] | join(" ")')
+                     --filters "Name=virtualization-type,Values=paravirtual" "Name=instance-state-name,Values=running" | jq -r -c '.Reservations[].Instances[] | [.InstanceId, .ImageId] | join(" ")')
+
+if [[ -z "${instance_pairs}" ]]; then
+	exit 0
+fi
 
 # open-air-quote hash-table close-air-quote to only have to describe each
 # image-id once
