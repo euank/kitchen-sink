@@ -4,6 +4,16 @@ set -e
 set -o nounset
 set -o pipefail
 
+if ! type aws &>/dev/null; then
+	1>&2 echo "The 'aws' command is required to run this script"
+	exit 1
+fi
+if ! type jq &>/dev/null; then
+	1>&2 echo "The 'jq' command is required to run this script"
+	exit 1
+fi
+
+
 # The account which publishes Container Linux AMIs
 IMAGE_OWNER=595879546273
 
