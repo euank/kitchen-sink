@@ -15,13 +15,12 @@ REGION="${1:?Please provide the AWS region to search as an argument}"
 instance_pairs=$(aws ec2 describe-instances \
                      --output=json \
                      --region=$REGION \
-                     --filters Name=virtualization-type,Values=paravirtual,Name=instance-state-name,Values=running | jq -c '.Reservations[].Instances[] | [.InstanceId, .ImageId]')
+                     --filters Name=virtualization-type,Values=paravirtual,Name=instance-state-name,Values=running | jq -r -c '.Reservations[].Instances[] | [.InstanceId, .ImageId] | join(" ")')
 
 # Poor man's hash-table to only have to describe each image-id once
 image_cache=""
 
-while read -r pair; do
-	image_id=$(jq -r -c '.[1]' <(echo "${pair}"))
+while read -r instance_id image_id; do
 	is_containerlinux="0"
 
 	if grep "${image_id}=0" <(echo "${image_cache}") &>/dev/null; then
@@ -36,6 +35,6 @@ while read -r pair; do
 	fi
 		
 	if [[ "${is_containerlinux}" == "1" ]]; then
-		echo "${pair}" | jq -r -c '.[0]'
+		echo "${instance_id}"
 	fi
 done <<< "${instance_pairs}"
