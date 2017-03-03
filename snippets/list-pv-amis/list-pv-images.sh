@@ -17,7 +17,8 @@ instance_pairs=$(aws ec2 describe-instances \
                      --region=$REGION \
                      --filters Name=virtualization-type,Values=paravirtual,Name=instance-state-name,Values=running | jq -r -c '.Reservations[].Instances[] | [.InstanceId, .ImageId] | join(" ")')
 
-# Poor man's hash-table to only have to describe each image-id once
+# open-air-quote hash-table close-air-quote to only have to describe each
+# image-id once
 image_cache=""
 
 while read -r instance_id image_id; do
