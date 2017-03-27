@@ -16,7 +16,9 @@ github.com/sirupsen/logrus
 go.uber.org/zap
 EOF
 
-# Go get some tea; it hits github to find the root vcs for all pkg imports.
+# Go get some tea; it hits the package vcs in question to find the root vcs for
+# all pkg imports.
+# Because of vanity urls, some also timeout, and there's no parallelization.
 # Omit 'glog' to make it faster
 # ...
 
