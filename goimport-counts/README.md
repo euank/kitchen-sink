@@ -13,6 +13,7 @@ $ ./importers <<EOF
 github.com/golang/glog
 github.com/go-kit/kit/log
 github.com/sirupsen/logrus
+github.com/Sirupsen/logrus
 go.uber.org/zap
 EOF
 
@@ -23,6 +24,7 @@ EOF
 # ...
 
 Results:
+	1966	github.com/Sirupsen/logrus
 	806	github.com/golang/glog
 	70	github.com/go-kit/kit/log
 	57	github.com/sirupsen/logrus

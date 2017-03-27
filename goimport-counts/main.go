@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -14,6 +15,10 @@ import (
 )
 
 func main() {
+	var verbose bool
+	flag.BoolVar(&verbose, "v", false, "whether to print the full list of importers for a package")
+	flag.Parse()
+
 	lines, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
 		log.Fatalf("Error reading input as packages: %v\n", err)
@@ -59,6 +64,12 @@ func main() {
 	fmt.Printf("Results:\n")
 	for _, sr := range srs {
 		fmt.Printf("\t%d\t%s\n", sr.num, sr.pkg)
+
+		if verbose {
+			for importer := range imports[sr.pkg] {
+				fmt.Printf("\t\t%v\n", importer)
+			}
+		}
 	}
 }
 
