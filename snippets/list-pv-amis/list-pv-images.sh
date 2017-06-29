@@ -4,6 +4,15 @@ set -e
 set -o nounset
 set -o pipefail
 
+function usage() {
+	cat <<EOM
+Usage: $0 [AWS Region]"
+
+Note: environment variables respected by the AWS cli, such as AWS_PROFILE, will
+also be respected by this script.
+EOM
+}
+
 if ! type aws &>/dev/null; then
 	1>&2 echo "The 'aws' command is required to run this script"
 	exit 1
@@ -17,7 +26,13 @@ fi
 # The account which publishes Container Linux AMIs
 IMAGE_OWNER=595879546273
 
-REGION="${1:?Please provide the AWS region to search as an argument}"
+# Catch '-h, --help' via a regex for any flags
+if [[ $# -ne 1 ]] || [[ "$1" =~ ^- ]]; then
+	usage
+	exit 0
+fi
+
+REGION="$1"
 
 # Get all running PV instances, including their image-id
 # The image-id is needed to figure out if it's container linux; unfortunately
