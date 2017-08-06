@@ -1,0 +1,10 @@
+[package]
+name = "EuIrcBotters"
+version = "0.1.0"
+authors = ["Euan Kemp <euank@euank.com>"]
+
+[dependencies]
+tokio-irc-client = {version = "*", features = ["tls"]}
+futures = "*"
+tokio-core = "*"
+pircolate = "*"
