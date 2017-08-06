@@ -32,9 +32,13 @@ fn main() {
         irc.send_all(stream::iter(connect_sequence))
     }).and_then(|(irc, res)| {
         let next = irc.skip_while(|msg| {
-            match msg.command() {
-                Some(Welcome(_, m)) => {
-                    println!("Got a welcome: {}", m);
+            match msg.raw_command() {
+                "422" => {
+                    println!("Got an ERR_NOMOTD");
+                    Ok(false)
+                }
+                "376" => {
+                    println!("Got an RPL_ENDOFMOTD");
                     Ok(false)
                 }
                 _ => Ok(true), // keep waiting for welcome
