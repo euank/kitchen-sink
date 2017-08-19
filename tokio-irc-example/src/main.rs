@@ -11,6 +11,7 @@ use futures::Sink;
 
 use tokio_irc_client::Client;
 use pircolate::message;
+use pircolate::command::PrivMsg;
 
 fn main() {
     // Create the event loop
@@ -59,9 +60,19 @@ fn main() {
         println!("join");
         send.send(message::client::join("#seubot", None).unwrap())
             .and_then(|send| {
-                recv.for_each(|msg| {
-                    println!("got {:?}", msg);
-                    Ok(())
+                recv.filter_map(|msg| {
+                    println!("{:?}", msg);
+                    match msg.command() {
+                        Some(PrivMsg(_, msg)) => {
+                            if msg.starts_with("!test ") || msg == "!test" {
+                                return Some(message::client::priv_msg("#seubot", "test command called").unwrap());
+                            }
+                        },
+                        _ => {},
+                    };
+                    None
+                }).fold(send, |send, msg| {
+                    return send.send(msg);
                 })
             })
     });
