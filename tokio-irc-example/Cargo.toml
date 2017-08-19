@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Euan Kemp <euank@euank.com>"]
 
 [dependencies]
-tokio-irc-client = {version = "*", features = ["tls"]}
+tokio-irc-client = "*"
 futures = "*"
 tokio-core = "*"
 pircolate = "*"

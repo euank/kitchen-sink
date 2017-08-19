@@ -3,35 +3,39 @@ extern crate futures;
 extern crate tokio_core;
 extern crate pircolate;
 
-use std::time;
 use std::net::ToSocketAddrs;
 use tokio_core::reactor::Core;
 use futures::future::Future;
 use futures::Stream;
 use futures::Sink;
-use futures::stream;
-use futures::stream::SkipWhile;
 
 use tokio_irc_client::Client;
 use pircolate::message;
-use pircolate::command::{PrivMsg, Welcome};
 
 fn main() {
     // Create the event loop
     let mut ev = Core::new().unwrap();
     let handle = ev.handle();
 
-    let addr = "irc.wobscale.website:6697".to_socket_addrs().unwrap().next().unwrap();
+    let addr = "irc.wobscale.website:6667"
+        .to_socket_addrs()
+        .unwrap()
+        .next()
+        .unwrap();
 
-    let connect = Client::new(addr)
-        .connect_tls(&handle, "irc.wobscale.website");
+    let c = Client::new(addr).connect(&handle);
 
-    let join_and_print = connect.and_then(|irc| {
-        let connect_sequence = vec![message::client::nick("fjtest"),
-        message::client::user("testfj", "testfj")];
-        irc.send_all(stream::iter(connect_sequence))
-    }).and_then(|(irc, res)| {
-        let next = irc.skip_while(|msg| {
+    let connected = c.and_then(|irc| {
+        println!("nick");
+        irc.send(message::client::nick("rstest").unwrap())
+    }).and_then(|stream| {
+            println!("user");
+            stream.send(message::client::user("rstest", "rstest").unwrap())
+        });
+
+    let joined = connected.and_then(|irc| {
+        let (send, recv) = irc.split();
+        let skipped = recv.skip_while(|msg| {
             match msg.raw_command() {
                 "422" => {
                     println!("Got an ERR_NOMOTD");
@@ -44,20 +48,23 @@ fn main() {
                 _ => Ok(true), // keep waiting for welcome
             }
         });
-        Ok((next, res))
-    }).and_then(|(irc, res)| {
-        irc.send_all(stream::iter(vec![message::client::join("#fj", None)]))
-    }).and_then(|(irc, res)| {
-        // let (send, recv) = irc.split();
-        irc.for_each(|m| {
-            println!("{:?}", m);
-            // Note: neither `irc.send` nor `send.send` works here because it's already moved.
-            // This includes if I use `recv.for_each` and then try to send with `send.send`. Wtf is
-            // the point of splitting it if my lifetimes are still fuq'd?
-            //send.send_all(stream::iter(vec![message::client::join("#fj", None)]));
-            Ok(())
-        })
+
+        skipped
+            .into_future()
+            .map_err(|res| res.0)
+            .and_then(|(_, s)| Ok((send, s)))
     });
 
-    ev.run(join_and_print).unwrap();
+    let bot = joined.and_then(|(send, recv)| {
+        println!("join");
+        send.send(message::client::join("#seubot", None).unwrap())
+            .and_then(|send| {
+                recv.for_each(|msg| {
+                    println!("got {:?}", msg);
+                    Ok(())
+                })
+            })
+    });
+
+    ev.run(bot).unwrap();
 }
