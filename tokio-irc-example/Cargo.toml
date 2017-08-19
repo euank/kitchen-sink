@@ -1,5 +1,5 @@
 [package]
-name = "EuIrcBotters"
+name = "example_tokio_irc"
 version = "0.1.0"
 authors = ["Euan Kemp <euank@euank.com>"]
 

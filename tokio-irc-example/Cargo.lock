@@ -1,5 +1,5 @@
 [root]
-name = "EuIrcBotters"
+name = "example_tokio_irc"
 version = "0.1.0"
 dependencies = [
  "futures 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
