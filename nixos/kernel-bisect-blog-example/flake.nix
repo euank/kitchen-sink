@@ -2,7 +2,7 @@
   description = "an example flake used for a blogpost";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-21.11";
   };
 
   outputs = {
