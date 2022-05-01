@@ -5,13 +5,13 @@
 }: let
   nixpkgs = inputs.nixpkgs;
 
-  commit = "62fb9874f5da54fdb243003b386128037319b219";
+  commit = "2c85ebc57b3e1817b6ce1a6b703928e113a90442";
   kernel = pkgs.linuxPackages_custom {
     src = builtins.fetchTarball {
       url = "https://github.com/torvalds/linux/archive/${commit}.tar.gz";
-      sha256 = "1bgcicq01sqwshzn9s730fw30756sqg5wdm6mraxmf131xn3vmim";
+      sha256 = "1znxp4v7ykfz4fghzjzhd5mj9pj5qpk88n7k7nbkr5x2n0xqfj6k";
     };
-    version = "5.13.0";
+    version = "5.10.0";
     configfile = ./kconfig;
   };
 
