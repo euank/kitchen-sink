@@ -27,6 +27,14 @@
           ./repro/configuration.nix
         ];
       };
+      repro-host = nixpkgs.lib.nixosSystem rec {
+        inherit pkgs;
+        specialArgs = {inherit inputs;};
+        system = "x86_64-linux";
+        modules = [
+          ./repro-host/configuration.nix
+        ];
+      };
     };
     qemuImage = (import "${nixpkgs}/nixos/lib/make-disk-image.nix") {
       pkgs = pkgs;
