@@ -2,16 +2,16 @@
   "nodes": {
     "nixpkgs": {
       "locked": {
-        "lastModified": 1679391055,
-        "narHash": "sha256-uUEHAqfXb45E9D4WD+lWFmJP1oBF5J3DMtZq4ZEyOsY=",
+        "lastModified": 1679920840,
+        "narHash": "sha256-X4Yh21l4/7Zzr07boo/vzyx5mFXUZsPaKq8BaOygakQ=",
         "owner": "euank",
         "repo": "nixpkgs",
-        "rev": "4ea194e5490b44bbf692d52510fb5a0ca8aa7626",
+        "rev": "aaf4e837c3ac98c38987be558abf26027d6d8172",
         "type": "github"
       },
       "original": {
         "owner": "euank",
-        "ref": "anki-native",
+        "ref": "test-anki-wayland",
         "repo": "nixpkgs",
         "type": "github"
       }

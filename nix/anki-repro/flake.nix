@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "github:euank/nixpkgs/anki-native";
+  inputs.nixpkgs.url = "github:euank/nixpkgs/test-anki-wayland";
 
   outputs = { self, nixpkgs, ... }@input:
   let
@@ -31,7 +31,6 @@
           system.stateVersion = "20.03";
 
           environment.systemPackages = with pkgs; [
-            qt6.qtwayland
             anki
           ];
 
