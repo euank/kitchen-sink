@@ -2,7 +2,7 @@
 
 It's interesting to try different models on things that they fail on to see which ones fail.
 
-I've got this image ([!sample.jpg](./sample.jpg)) which gpt-5 had a low success rate on OCRing, and so I've tested it against various models.
+I've got this image (![sample.jpg](./sample.jpg)) which gpt-5 had a low success rate on OCRing, and so I've tested it against various models.
 
 Note: copyright steins;gate I guess? This isn't a substitute for the visual novel, so I'm hoping it's fair use.
 
