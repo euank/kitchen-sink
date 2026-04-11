@@ -6,11 +6,14 @@ from collections import defaultdict
 from matplotlib.patches import Patch
 
 results = defaultdict(lambda: {"correct": 0, "total": 0, "durations": []})
+sample_ids = set()
 
 with open("results.csv") as f:
     reader = csv.DictReader(f)
     for row in reader:
         model = row["model"]
+        sample_id = row.get("sample") or "sample-1"
+        sample_ids.add(sample_id)
         results[model]["total"] += 1
         if row["correct"] == "correct":
             results[model]["correct"] += 1
@@ -34,6 +37,7 @@ for m in results:
 models = valid_models
 accuracy = [results[m]["correct"] / results[m]["total"] * 100 for m in models]
 avg_time = [np.mean(results[m]["durations"]) for m in models]
+runs_per_sample = max((results[m]["total"] // max(len(sample_ids), 1)) for m in models) if models else 0
 
 # Short labels
 labels = [m.split("/")[-1] for m in models]
@@ -55,7 +59,10 @@ x = np.arange(len(models))
 
 bars1 = ax1.bar(x, accuracy, color=colors)
 ax1.set_ylabel("Accuracy (%)", fontsize=12)
-ax1.set_title("OCR Accuracy (Japanese Text) — 10 runs per model", fontsize=14)
+ax1.set_title(
+    f"OCR Accuracy (Japanese Text) — {runs_per_sample} runs x {len(sample_ids)} samples per model",
+    fontsize=14,
+)
 ax1.set_xticks(x)
 ax1.set_xticklabels(labels, rotation=55, ha="right", fontsize=8)
 ax1.set_ylim(0, 115)

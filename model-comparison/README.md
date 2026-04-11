@@ -2,57 +2,55 @@
 
 It's interesting to try different models on things that they fail on to see which ones fail.
 
-I've got this image (![sample.jpg](./sample.jpg)) which gpt-5 had a low success rate on OCRing, and so I've tested it against various models.
+The benchmark uses the labeled images in [`samples/`](./samples/) to compare OCR performance across models.
 
 Note: copyright steins;gate I guess? This isn't a substitute for the visual novel, so I'm hoping it's fair use.
 
 ### Task
 
-Each model is given `sample.jpg` (an image containing Japanese text) and asked:
+Each model is given every image in [`samples/`](./samples/) and asked:
 
 > "Please output your best guess at the Japanese characters in this image. Do not output any other text."
 
-The correct answer is: `一度言ってしまったら、もう後には退けなかった。`
+Each sample's `.txt` file contains newline-delimited acceptable exact answers. An output is scored as "correct" if it exactly matches any line in that sample's `.txt`.
 
-For some reason, gpt-5 models like to output `引` instead of `退`.
-
-Each model was run 10 times. An answer is "correct" only if it matches the expected string exactly.
+Each model is run 10 times per sample, and the reported accuracy is across all runs for all samples.
 
 ## Results
 
-I picked a grab-bag of recent models.
+I picked a grab-bag of recent models. These numbers are from 4 samples x 10 runs per model.
 
 ![Benchmark Results](benchmark_results.png)
 
 | Model | Accuracy | Avg Time |
 |-------|----------|----------|
-| gpt-4.1 | 100% | 2.5s |
-| gpt-4.1-mini | 100% | 2.1s |
-| gpt-4.1-nano | 100% | 1.8s |
-| o3 | 100% | 3.2s |
-| o4-mini | 100% | 3.1s |
-| gpt-5 | 40% | 10.9s |
-| gpt-5-mini | 0% | 9.2s |
-| gpt-5-nano | 20% | 8.2s |
-| gpt-5.1 | 100% | 2.3s |
+| gpt-4.1 | 85% | 2.7s |
+| gpt-4.1-mini | 90% | 2.3s |
+| gpt-4.1-nano | 38% | 2.2s |
+| o3 | 82% | 9.9s |
+| o4-mini | 90% | 6.3s |
+| gpt-5 | 70% | 13.4s |
+| gpt-5-mini | 52% | 9.0s |
+| gpt-5-nano | 57% | 14.2s |
+| gpt-5.1 | 75% | 2.7s |
 | gpt-5.2 | 100% | 1.9s |
-| gpt-5.4 | 100% | 1.8s |
-| gpt-5.4-mini | 60% | 1.7s |
-| gpt-5.4-nano | 100% | 1.5s |
-| gemini-2.5-pro | 100% | 10.7s |
-| gemini-2.5-flash | 90% | 4.8s |
-| gemini-2.5-flash-lite | 100% | 2.4s |
-| gemini-3-pro-preview | 100% | 10.9s |
-| gemini-3-flash-preview | 100% | 4.2s |
-| gemini-3.1-pro-preview | 100% | 10.4s |
-| claude-opus-4.0 | 100% | 4.0s |
-| claude-sonnet-4.0 | 100% | 3.3s |
-| claude-opus-4.1 | 100% | 3.6s |
-| claude-sonnet-4.5 | 100% | 4.0s |
-| claude-haiku-4.5 | 100% | 2.1s |
-| claude-opus-4.5 | 100% | 2.9s |
-| claude-opus-4.6 | 100% | 3.6s |
-| claude-sonnet-4.6 | 100% | 3.0s |
+| gpt-5.4 | 90% | 2.3s |
+| gpt-5.4-mini | 62% | 1.9s |
+| gpt-5.4-nano | 28% | 1.9s |
+| gemini-2.5-pro | 72% | 11.7s |
+| gemini-2.5-flash | 60% | 5.0s |
+| gemini-2.5-flash-lite | 50% | 3.2s |
+| gemini-3-pro-preview | 90% | 11.2s |
+| gemini-3-flash-preview | 75% | 6.4s |
+| gemini-3.1-pro-preview | 80% | 11.8s |
+| claude-opus-4-0 | 50% | 4.2s |
+| claude-sonnet-4-0 | 60% | 4.1s |
+| claude-opus-4-1-20250805 | 50% | 4.4s |
+| claude-sonnet-4-5 | 42% | 3.5s |
+| claude-haiku-4-5-20251001 | 32% | 2.2s |
+| claude-opus-4-5-20251101 | 50% | 4.3s |
+| claude-opus-4-6 | 50% | 4.1s |
+| claude-sonnet-4-6 | 75% | 3.0s |
 
 ## Raw Data
 
