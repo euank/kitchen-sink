@@ -24,33 +24,35 @@ I picked a grab-bag of recent models. These numbers are from 5 samples x 10 runs
 
 | Model | Accuracy | Avg Time |
 |-------|----------|----------|
-| gpt-4.1 | 78% | 2.7s |
-| gpt-4.1-mini | 92% | 2.1s |
-| gpt-4.1-nano | 42% | 2.1s |
-| o3 | 74% | 9.2s |
-| o4-mini | 96% | 5.1s |
-| gpt-5 | 56% | 13.9s |
-| gpt-5-mini | 56% | 7.6s |
-| gpt-5-nano | 50% | 13.9s |
-| gpt-5.1 | 62% | 2.5s |
-| gpt-5.2 | 94% | 2.2s |
-| gpt-5.4 | 84% | 2.5s |
-| gpt-5.4-mini | 58% | 2.0s |
-| gpt-5.4-nano | 20% | 1.9s |
-| gemini-2.5-pro | 68% | 11.6s |
-| gemini-2.5-flash | 52% | 5.0s |
-| gemini-2.5-flash-lite | 48% | 3.8s |
-| gemini-3-pro-preview | 70% | 14.2s |
+| gpt-4.1 | 80% | 3.0s |
+| gpt-4.1-mini | 98% | 2.3s |
+| gpt-4.1-nano | 48% | 2.0s |
+| o3 | 76% | 6.4s |
+| o4-mini | 86% | 4.9s |
+| gpt-5 | 52% | 14.0s |
+| gpt-5-mini | 54% | 7.8s |
+| gpt-5-nano | 48% | 10.9s |
+| gpt-5.1 | 62% | 2.8s |
+| gpt-5.2 | 98% | 2.2s |
+| gpt-5.4 | 90% | 2.4s |
+| gpt-5.4-mini | 62% | 2.3s |
+| gpt-5.4-nano | 24% | 2.1s |
+| gemini-2.5-pro | 66% | 11.0s |
+| gemini-2.5-flash | 46% | 4.3s |
+| gemini-2.5-flash-lite | 46% | 2.8s |
+| gemini-3-pro-preview | 68% | 12.6s |
 | gemini-3-flash-preview | 64% | 5.6s |
-| gemini-3.1-pro-preview | 70% | 12.3s |
+| gemini-3.1-pro-preview | 74% | 11.0s |
 | claude-opus-4-0 | 40% | 4.5s |
-| claude-sonnet-4-0 | 56% | 3.8s |
-| claude-opus-4-1-20250805 | 40% | 4.8s |
-| claude-sonnet-4-5 | 40% | 4.5s |
-| claude-haiku-4-5-20251001 | 20% | 2.9s |
-| claude-opus-4-5-20251101 | 60% | 3.7s |
-| claude-opus-4-6 | 62% | 4.4s |
-| claude-sonnet-4-6 | 80% | 3.5s |
+| claude-sonnet-4-0 | 66% | 4.0s |
+| claude-opus-4-1-20250805 | 38% | 4.6s |
+| claude-sonnet-4-5 | 46% | 3.8s |
+| claude-haiku-4-5-20251001 | 24% | 2.3s |
+| claude-opus-4-5-20251101 | 60% | 3.8s |
+| claude-opus-4-6 | 62% | 5.0s |
+| claude-sonnet-4-6 | 80% | 3.8s |
+
+`claude-opus-4-7` was attempted but errored on all runs, so it is excluded from the chart and summary table.
 
 ## Raw Data
 
